@@ -3,6 +3,7 @@ from time import sleep
 running = True
 balance = 0
 
+
 print("PYTHON BANKING\n".center(50))
 
 
@@ -15,14 +16,17 @@ def withdraw(balance):
     if withdraw > balance:
         print(f"Insuficient funds! Please enter a valid amount $: ")
         withdraw = float(input(f"How much would like to withdraw $: "))
+        return balance
     elif withdraw <= 0:
         print("With draw can not be 0 or less... Please enter a valid amount $: ")
         withdraw = float(input(f"How much would like to withdraw? $: "))
+        return balance
 
     else:
         balance -= withdraw
         print(f"Withdraw Successful! Your current balance is ${balance:.2f}")
         print(f"Amount withdrawn {withdraw:.2f}")
+        return balance
 
 
 def deposit(balance):
@@ -30,12 +34,17 @@ def deposit(balance):
     if deposit <= 0:
         print("Please enter a amount greater than 0...")
         deposit = float(input("How much would like to deposit?  $: "))
+        return balance
     else:
-        balance = balance + deposit
+        balance += deposit
         print(f"Deposit successful! Your current balance is ${balance:.2f}")
+        return balance
 
 
 def main():
+    global running
+    global balance
+
     while running:
 
         print("-" * 50)
@@ -48,19 +57,19 @@ def main():
             case 1:
                 display_balance(balance)
             case 2:
-                withdraw(balance)
+                balance = withdraw(balance)
             case 3:
-                deposit(balance)
+                balance = deposit(balance)
             case 4:
                 print("EXITING APP!")
                 sleep(2)
-                break
+                running = False
             case _:
                 print("INVALID OPTION!!")
                 continue
 
 
-if "__name__" == "__main__":
+if __name__ == "__main__":
     main()
 
 main()
